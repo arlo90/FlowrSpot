@@ -40,9 +40,17 @@ struct RestClient {
   func request<DecodeInto: Decodable>(_ decodeInto: DecodeInto.Type, _ request: Request, version: Version, success: SuccessCompletion<DecodeInto>, failure: FailureCompletion) {
     self.request(request, version: version, success: {
       do {
-        let data = try JSONSerialization.data(withJSONObject: $0, options: [])
-        let response = try self.decoder.decode(decodeInto, from: data)
-        success?(response)
+        // When we fetch just one flower, there is an issue with mapping
+        // In past I used ObjectMapper with Alamofire, which gave me more control over mapping.
+        if $0.first?.key == "flower" {
+            let data = try JSONSerialization.data(withJSONObject: $0["flower"], options: [])
+            let response = try self.decoder.decode(decodeInto, from: data)
+            success?(response)
+        } else {
+            let data = try JSONSerialization.data(withJSONObject: $0, options: [])
+            let response = try self.decoder.decode(decodeInto, from: data)
+            success?(response)
+        }
       } catch {
         failure?(.invalidJson)
       }

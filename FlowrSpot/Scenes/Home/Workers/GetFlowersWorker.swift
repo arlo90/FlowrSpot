@@ -9,9 +9,13 @@
 import Foundation
 
 class GetFlowersWorker {
-  var downloader = FlowersDownloader()
-  
-  func execute(success: RestClient.SuccessCompletion<[Flower]>, failure: RestClient.FailureCompletion) {
-    downloader.fetchFlowersList(success: success, failure: failure)
-  }
+    var downloader = FlowersDownloader()
+    
+    func execute(success: RestClient.SuccessCompletion<[Flower]>, failure: RestClient.FailureCompletion) {
+        downloader.fetchFlowersList(success: success, failure: failure)
+    }
+    
+    func execute(flowerId: Int, success: RestClient.SuccessCompletion<Flower>, failure: RestClient.FailureCompletion) {
+        downloader.fetchFlowerDetails(flowerId: flowerId, success: success, failure: failure)
+    }
 }

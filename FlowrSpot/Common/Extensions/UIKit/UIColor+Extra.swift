@@ -17,6 +17,8 @@ extension UIColor {
 // MARK: - Theme Colors
 
 extension UIColor {
-  static let flowrGray = UIColor(r: 148, g: 158, b: 160)
-  static let flowrPink = UIColor(r: 223, g: 145, b: 134)
+    static let flowrGray = UIColor(r: 148, g: 158, b: 160)
+    static let flowrPink = UIColor(r: 223, g: 145, b: 134)
+    static let flowrBeige = UIColor(r: 236, g: 188, b: 179)
+    static let flowrBlush = UIColor(r: 234, g: 167, b: 158)
 }

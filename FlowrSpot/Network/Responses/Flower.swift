@@ -13,4 +13,5 @@ struct Flower: Codable {
   let sightings: Int
   let profilePicture: String
   let favorite: Bool
+    let description: String?
 }

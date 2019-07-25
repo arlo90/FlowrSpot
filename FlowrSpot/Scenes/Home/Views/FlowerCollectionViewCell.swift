@@ -52,6 +52,7 @@ private extension FlowerCollectionViewCell {
   
   func setupImageView() {
     addSubview(imageView)
+    imageView.contentMode = .scaleAspectFill
     imageView.kf.indicatorType = .activity
     let gradientLayer = CAGradientLayer()
     gradientLayer.frame = bounds
