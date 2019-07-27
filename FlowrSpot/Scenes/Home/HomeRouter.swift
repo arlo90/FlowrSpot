@@ -25,7 +25,7 @@ class HomeRouter {
 // MARK: - Routing Logic
 extension HomeRouter: HomeRoutingLogic {
   func navigateToFlowerDetails(flower: Flower) {
-    let flowerVC = FlowerDetailViewController(flowerId: flower.id)
+    let flowerVC = FlowerDetailViewController(flowerId: flower.id, delegate: nil)
     viewController?.navigationController?.pushViewController(flowerVC, animated: true)
   }
   

@@ -21,13 +21,26 @@ class FlowerHeaderView: UIView {
     @IBOutlet weak var sightingLabel: UILabel!
     @IBOutlet weak var sightingBackgroundView: UIView!
     
+    private let gradientLayer = CAGradientLayer()
+    private var router: DetailRoutingLogic?
+    private var flower: Flower?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         setupDesign()
     }
     
-    func setup(flower: Flower) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        gradientLayer.frame = backgroundImageView.bounds
+    }
+    
+    func setup(flower: Flower, router: DetailRoutingLogic?) {
+        self.flower = flower
+        self.router = router
+        
         titleLabel.text = flower.name
         subtitleLabel.text = flower.latinName
         backgroundImageView.kf.setImage(with: URL(string: "http:\(flower.profilePicture)"))
@@ -35,6 +48,8 @@ class FlowerHeaderView: UIView {
         sightingLabel.text = "sightings_count".localized(flower.sightings ?? 0)
     }
     
+    // User interaction is disabled for this view, so we need to handle click by ourself
+    // Disabling interaction allows for tableView to be scrollable under header view.
     override internal func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if newSightingButton.frame.contains(point) {
             return newSightingButton
@@ -54,9 +69,9 @@ private extension FlowerHeaderView {
         sightingLabel.font = .custom(type: .regular, size: 12)
         
         // Button
+        let buttonGradientLayer = CAGradientLayer()
         newSightingButton.titleLabel?.font = .custom(type: .semibold, size: 14)
         newSightingButton.setTitle("detail_button_add_new_sighting".localized(), for: .normal)
-        let buttonGradientLayer = CAGradientLayer()
         buttonGradientLayer.frame = newSightingButton.bounds
         buttonGradientLayer.colors = [UIColor.flowrBlush.cgColor, UIColor.flowrBeige.cgColor]
         buttonGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
@@ -67,7 +82,6 @@ private extension FlowerHeaderView {
         newSightingButton.layer.masksToBounds = true
         
         // Background
-        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = backgroundImageView.frame
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.0, 1.0]
@@ -79,6 +93,11 @@ private extension FlowerHeaderView {
     }
     
     @IBAction func newSightingButtonPressed(_ sender: Any) {
-        // Navigate to empty screen
+        guard let flower = flower else {
+            router?.navigateToAlert(title: "general_error".localized(), message: "placeholder_no_content".localized(), handler: nil)
+            return
+        }
+        
+        router?.navigateToCreateNewSighting(flower: flower)
     }
 }

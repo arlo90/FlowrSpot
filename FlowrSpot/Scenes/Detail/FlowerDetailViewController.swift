@@ -17,14 +17,19 @@ class FlowerDetailViewController: UIViewController {
     var interactor: DetailBusinessLogic?
     private lazy var contentView = DetailContentView.autolayoutView()
     private let flowerDataSource = FlowerDataSource()
+    var router: DetailRoutingLogic?
     
-    init(flowerId: Int) {
+    init(flowerId: Int, delegate: DetailRouterDelegate?) {
         super.init(nibName: nil, bundle: nil)
         let interactor = DetailInteractor()
         let presenter = DetailPresenter()
+        let router = DetailRouter()
         interactor.presenter = presenter
         presenter.viewController = self
+        router.viewController = self
+        router.delegate = delegate
         self.interactor = interactor
+        self.router = router
         
         loadData(flowerId: flowerId)
     }
@@ -44,7 +49,11 @@ extension FlowerDetailViewController: DetailDisplayLogic {
     func displayFlower(_ flower: Flower, sightings: [Sighting]) {
         navigationItem.title = flower.name
         flowerDataSource.update(sightings: sightings)
-        contentView.headerView.setup(flower: flower)
+        
+        // Here we should calculate height of header view, so it changes based on description size.
+        // Currently its hardcoded.
+        
+        contentView.headerView.setup(flower: flower, router: router)
         contentView.tableView.reloadData()
         contentView.emptyView.isHidden = true
     }
@@ -73,6 +82,8 @@ extension FlowerDetailViewController: UIScrollViewDelegate {
             headerViewTranslation = 0 // lock headerView
         }
         
+        // Based on offset we could add pagination for Sightings and fetch next page/size when scroll is closing to end.
+        
         contentView.headerView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: headerViewTranslation)
     }
 }
@@ -80,7 +91,6 @@ extension FlowerDetailViewController: UIScrollViewDelegate {
 // MARK: - Private methods
 private extension FlowerDetailViewController {
     func setupViews() {
-        
         navigationController?.navigationBar.tintColor = UIColor.flowrPinkishTan
         setupContentView()
     }
@@ -95,4 +105,6 @@ private extension FlowerDetailViewController {
     func loadData(flowerId: Int) {
         interactor?.fetchFlower(flowerId: flowerId)
     }
+    
+    // Funcion loadMore could be added for pagination.
 }
