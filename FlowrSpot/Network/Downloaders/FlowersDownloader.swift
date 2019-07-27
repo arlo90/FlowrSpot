@@ -18,7 +18,7 @@ final class FlowersDownloader {
 
 extension FlowersDownloader {
   func fetchFlowersList(success: RestClient.SuccessCompletion<[Flower]>, failure: RestClient.FailureCompletion) {
-    restClient.request(FlowersContainer.self, FlowerRequests.flowersList, version: Version.v1, success: {
+    restClient.request(FlowersContainer.self, FlowerRequests.flowersList, version: .v1, success: {
       success?($0.flowers)
     }, failure: failure)
   }
@@ -26,4 +26,10 @@ extension FlowersDownloader {
   func fetchFlowerDetails(flowerId: Int, success: RestClient.SuccessCompletion<Flower>, failure: RestClient.FailureCompletion) {
     restClient.request(Flower.self, FlowerRequests.flowerDetails(flowerid: flowerId), version: .v1, success: success, failure: failure)
   }
+    
+    func fetchFlowerSightings(flowerId: Int, success: RestClient.SuccessCompletion<[Sighting]>, failure: RestClient.FailureCompletion) {
+        restClient.request(SightingsContainer.self, SightingsRequests.sightingsList(id: flowerId), version: .v1, success: {
+            success?($0.sightings)
+        }, failure: failure)
+    }
 }

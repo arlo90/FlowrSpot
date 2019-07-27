@@ -9,7 +9,7 @@
 import PovioKit
 
 protocol DetailDisplayLogic: class {
-    func displayFlower(_ flower: Flower)
+    func displayFlower(_ flower: Flower, sightings: [Sighting])
     func displayError(_ error: RemoteResourceError)
 }
 
@@ -41,8 +41,8 @@ class FlowerDetailViewController: UIViewController {
 
 // MARK: - Display Logic
 extension FlowerDetailViewController: DetailDisplayLogic {
-    func displayFlower(_ flower: Flower) {
-        flowerDataSource.update(flower: flower)
+    func displayFlower(_ flower: Flower, sightings: [Sighting]) {
+        flowerDataSource.update(flower: flower, sightings: sightings)
         contentView.collectionView.reloadData()
         contentView.emptyView.isHidden = true
     }

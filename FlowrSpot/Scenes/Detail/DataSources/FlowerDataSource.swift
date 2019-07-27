@@ -11,9 +11,11 @@ import PovioKit
 class FlowerDataSource: NSObject, DataSource {
     var sections = [FlowersSection]()
     private var flower: Flower?
+    private var sightings: [Sighting]?
     
-    func update(flower: Flower) {
+    func update(flower: Flower, sightings: [Sighting]) {
         self.flower = flower
+        self.sightings = sightings
         buildSections()
     }
 }

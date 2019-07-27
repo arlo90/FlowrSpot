@@ -9,12 +9,9 @@
 struct Sighting: Codable {
     let id: Int
     let name: String
-    let latinName: String
-    let sightings: Int
+    let description: String
     let picture: String
     let likesCount: Int
     let commentsCount: Int
-    let description: String
     let user: User
-    let flower: Flower
 }
