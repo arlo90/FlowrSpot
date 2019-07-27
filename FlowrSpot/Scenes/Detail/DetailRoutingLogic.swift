@@ -27,6 +27,9 @@ class DetailRouter {
 extension DetailRouter: DetailRoutingLogic {
     func navigateToCreateNewSighting(flower: Flower) {
         let newVC = CreateNewSightingViewController(flower: flower)
+        // There is an issue, if background color is clear, transition is laggy, stops midway.
+        newVC.view.backgroundColor = .white
+        
         viewController?.navigationController?.pushViewController(newVC, animated: true)
     }
     
