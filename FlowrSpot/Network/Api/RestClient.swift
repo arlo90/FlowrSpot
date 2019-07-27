@@ -42,8 +42,8 @@ struct RestClient {
       do {
         // When we fetch just one flower, there is an issue with mapping
         // In past I used ObjectMapper with Alamofire, which gave me more control over mapping.
-        if $0.first?.key == "flower" {
-            let data = try JSONSerialization.data(withJSONObject: $0["flower"], options: [])
+        if $0.first?.key == "flower", let flower = $0["flower"] {
+            let data = try JSONSerialization.data(withJSONObject: flower, options: [])
             let response = try self.decoder.decode(decodeInto, from: data)
             success?(response)
         } else {
