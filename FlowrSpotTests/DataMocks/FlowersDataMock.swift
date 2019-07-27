@@ -22,7 +22,7 @@ class FlowersDataMock {
   
   func mockFlowerResponses() -> [FlowerResponse] {
     do {
-      let json = try laodJsonFromFile("flowers")
+      let json = try loadJsonFromFile("flowers")
       let data = try JSONSerialization.data(withJSONObject: json, options: [])
       let container = try decoder.decode(FlowersContainer.self, from: data)
       return container.flowers
@@ -34,7 +34,7 @@ class FlowersDataMock {
 }
 
 private extension FlowersDataMock {
-  func laodJsonFromFile(_ file: String) throws -> Any {
+  func loadJsonFromFile(_ file: String) throws -> Any {
     guard let path = Bundle(for: type(of: self)).path(forResource: file, ofType: "json") else { throw RemoteResourceError.generic }
     
     let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)

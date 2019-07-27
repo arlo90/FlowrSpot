@@ -24,4 +24,30 @@ class FlowersDownloaderTests: XCTestCase {
     })
     waitForExpectations(timeout: 5, handler: nil)
   }
+    
+    func testFetchFlower() {
+        let promise = expectation(description: "Completion handler invoked")
+        
+        flowersDownloader.fetchFlowerDetails(flowerId: 1, success: { (response) in
+            XCTAssertNotNil(response)
+            promise.fulfill()
+        }, failure: { error in
+            XCTFail("Request should succeed")
+            promise.fulfill()
+        })
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testFetchSightingsList() {
+        let promise = expectation(description: "Completion handler invoked")
+        
+        flowersDownloader.fetchFlowerSightings(flowerId: 1, success: { (response) in
+            XCTAssertNotNil(response)
+            promise.fulfill()
+        }, failure: { error in
+            XCTFail("Request should succeed")
+            promise.fulfill()
+        })
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
