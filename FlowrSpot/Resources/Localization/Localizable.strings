@@ -21,3 +21,5 @@
 
 /** Detail Scene */
 "detail_button_add_new_sighting" = "+ Add New Sighting?";
+"detail_comments_count" = "%d Comments";
+"detail_favorites_count" = "%d Favorites";

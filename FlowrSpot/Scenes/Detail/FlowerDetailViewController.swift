@@ -15,7 +15,7 @@ protocol DetailDisplayLogic: class {
 
 class FlowerDetailViewController: UIViewController {
     var interactor: DetailBusinessLogic?
-    private lazy var contentView = HomeContentView.autolayoutView()
+    private lazy var contentView = DetailContentView.autolayoutView()
     private let flowerDataSource = FlowerDataSource()
     
     init(flowerId: Int) {
@@ -42,34 +42,22 @@ class FlowerDetailViewController: UIViewController {
 // MARK: - Display Logic
 extension FlowerDetailViewController: DetailDisplayLogic {
     func displayFlower(_ flower: Flower, sightings: [Sighting]) {
-        flowerDataSource.update(flower: flower, sightings: sightings)
-        contentView.collectionView.reloadData()
+        navigationItem.title = flower.name
+        flowerDataSource.update(sightings: sightings)
+        contentView.headerView.setup(flower: flower)
+        contentView.tableView.reloadData()
         contentView.emptyView.isHidden = true
     }
     
     func displayError(_ error: RemoteResourceError) {
-//        router?.navigateToAlert(title: "general_error".localized(), message: error.localizedDescription, handler: nil)
         contentView.emptyView.isHidden = false
     }
 }
 
-// MARK: - UICollectionView Delegate
-extension FlowerDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return contentView.collectionViewDimensions.sizeForItem(at: indexPath, for: collectionView)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let row = flowerDataSource.row(at: indexPath) else {
-            Logger.error("No availible row in dataSource at \(indexPath)")
-            return
-        }
-        switch row {
-        case let .flower(entity):
-            print(entity)
-            return
-//            router?.navigateToFlowerDetails(flower: entity)
-        }
+// MARK: - UITableView Delegate
+extension FlowerDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Navigate on selection of cell
     }
 }
 
@@ -92,25 +80,19 @@ extension FlowerDetailViewController: UIScrollViewDelegate {
 // MARK: - Private methods
 private extension FlowerDetailViewController {
     func setupViews() {
-        navigationItem.title = "general_app_name".localized()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: contentView.rightBarButton)
+        
+        navigationController?.navigationBar.tintColor = UIColor.flowrPinkishTan
         setupContentView()
     }
     
     func setupContentView() {
         view.addSubview(contentView)
         contentView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        contentView.rightBarButton.setImage(#imageLiteral(resourceName: "plIconSearch"), for: .normal)
-        contentView.rightBarButton.addTarget(self, action: #selector(barButtonPressed), for: .touchUpInside)
-        contentView.collectionView.delegate = self
-        contentView.collectionView.dataSource = flowerDataSource
+        contentView.tableView.delegate = self
+        contentView.tableView.dataSource = flowerDataSource
     }
     
     func loadData(flowerId: Int) {
         interactor?.fetchFlower(flowerId: flowerId)
-    }
-    
-    @objc func barButtonPressed() {
-        contentView.collectionView.setContentOffset(CGPoint(x: 0, y: -contentView.headerViewHeight), animated: true)
     }
 }

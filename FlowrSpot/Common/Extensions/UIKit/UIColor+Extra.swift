@@ -21,4 +21,6 @@ extension UIColor {
     static let flowrPink = UIColor(r: 223, g: 145, b: 134)
     static let flowrBeige = UIColor(r: 236, g: 188, b: 179)
     static let flowrBlush = UIColor(r: 234, g: 167, b: 158)
+    static let flowrPinkishTan = UIColor(r: 223, g: 145, b: 134)
+    static let flowrCharcoalGray = UIColor(r: 51, g: 65, b: 68)
 }

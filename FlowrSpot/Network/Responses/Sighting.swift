@@ -14,4 +14,5 @@ struct Sighting: Codable {
     let likesCount: Int
     let commentsCount: Int
     let user: User
+    var flower: Flower
 }

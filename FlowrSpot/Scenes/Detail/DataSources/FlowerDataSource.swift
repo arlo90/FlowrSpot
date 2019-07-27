@@ -9,37 +9,36 @@
 import PovioKit
 
 class FlowerDataSource: NSObject, DataSource {
-    var sections = [FlowersSection]()
-    private var flower: Flower?
-    private var sightings: [Sighting]?
+    var sections = [SightingsSection]()
+    private var sightings = [Sighting]()
     
-    func update(flower: Flower, sightings: [Sighting]) {
-        self.flower = flower
+    func update(sightings: [Sighting]) {
         self.sightings = sightings
         buildSections()
     }
 }
 
-// MARK: - UICollectionView DataSource
-extension FlowerDataSource: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+// MARK: - UITableView DataSource
+extension FlowerDataSource: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRows(in: section)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let row = row(at: indexPath) else {
             Logger.error("No availible row in dataSource at \(indexPath)")
-            return UICollectionViewCell()
+            return UITableViewCell()
         }
         
-        let cell = collectionView.dequeueReusableCell(FlowerCollectionViewCell.self, at: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: SightingTableViewCell.identifier, for: indexPath)
         switch row {
-        case let .flower(entity):
-            cell.setFlower(entity)
+        case let .sighting(entity):
+            (cell as? SightingTableViewCell)?.setup(sighting: entity)
         }
         return cell
     }
@@ -48,7 +47,7 @@ extension FlowerDataSource: UICollectionViewDataSource {
 // MARK: - Private Methods
 private extension FlowerDataSource {
     func buildSections() {
-        let rows = [flower.map(FlowersRow.flower)!]
-        sections = [FlowersSection(rows: rows)]
+        let rows = sightings.map(SightingsRow.sighting)
+        sections = [SightingsSection(rows: rows)]
     }
 }

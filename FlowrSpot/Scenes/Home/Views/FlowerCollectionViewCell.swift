@@ -32,7 +32,7 @@ extension FlowerCollectionViewCell {
   func setFlower(_ flower: Flower) {
     titleLabel.text = flower.name
     subtitleLabel.text = flower.latinName
-    sightingsLabel.text = "sightings_count".localized(flower.sightings)
+    sightingsLabel.text = "sightings_count".localized(flower.sightings ?? 0)
     imageView.kf.setImage(with: URL(string: "http:\(flower.profilePicture)"))
   }
 }
