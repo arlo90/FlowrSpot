@@ -76,7 +76,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
 }
 
 // MARK: - UIScrollView Delegate
-extension HomeViewController: UIScrollViewDelegate {
+extension HomeViewController: UIScrollViewDelegate, ScrollToTopProtocol {
+    func scrollToTop() {
+        contentView.collectionView.setContentOffset(CGPoint(x: 0, y: -contentView.headerViewHeight), animated: true)
+    }
+    
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let contentOffset = -scrollView.contentOffset.y
     
@@ -120,6 +124,6 @@ private extension HomeViewController {
   }
   
   @objc func barButtonPressed() {
-    contentView.collectionView.setContentOffset(CGPoint(x: 0, y: -contentView.headerViewHeight), animated: true)
+    scrollToTop()
   }
 }

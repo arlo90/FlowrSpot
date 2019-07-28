@@ -17,11 +17,31 @@ class RootTabViewController: UITabBarController {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+    
+    private var selectedItem = 0
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupViews()
   }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        // Animation for transition when selecting tabbar items
+        UIView.transition(with: tabBar,
+                          duration: 0.3,
+                          options: [.allowUserInteraction, .transitionCrossDissolve],
+                          animations: {
+        }, completion: nil)
+        
+        // Selecting same item twice, will result in scrolling to top of the screen.
+        if selectedItem == item.tag {
+            if let base = selectedViewController?.children.last as? HomeViewController {
+                base.scrollToTop()
+            }
+        }
+        
+        selectedItem = item.tag
+    }
 }
 
 // MARK: - Private Methods
@@ -38,16 +58,17 @@ private extension RootTabViewController {
     setViewControllers(viewControllers, animated: true)
     
     if let items = tabBar.items, items.count == viewControllers.count {
-      setupTabBarItem(items[0], using: #imageLiteral(resourceName: "favoritesIcons"), title: nil)
-      setupTabBarItem(items[1], using: #imageLiteral(resourceName: "commentIcon"), title: nil)
-      setupTabBarItem(items[2], using: #imageLiteral(resourceName: "sightingListIcon"), title: nil)
-      setupTabBarItem(items[3], using: #imageLiteral(resourceName: "newSightingIcon"), title: nil)
+        setupTabBarItem(items[0], using: #imageLiteral(resourceName: "favoritesIcons"), title: nil, tag: 0)
+      setupTabBarItem(items[1], using: #imageLiteral(resourceName: "commentIcon"), title: nil, tag: 1)
+      setupTabBarItem(items[2], using: #imageLiteral(resourceName: "sightingListIcon"), title: nil, tag: 2)
+      setupTabBarItem(items[3], using: #imageLiteral(resourceName: "newSightingIcon"), title: nil, tag: 3)
     }
   }
   
-  func setupTabBarItem(_ item: UITabBarItem, using image: UIImage?, title: String?) {
+    func setupTabBarItem(_ item: UITabBarItem, using image: UIImage?, title: String?, tag: Int) {
     item.image = image
     item.title = title
+    item.tag = tag
     item.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
   }
 }

@@ -67,6 +67,7 @@
 		99DC55A92015FA7700E314D1 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 99DC55A82015FA7700E314D1 /* .swiftlint.yml */; };
 		99DC55B220160E1600E314D1 /* FlowersDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC55B120160E1600E314D1 /* FlowersDownloaderTests.swift */; };
 		99EF39B922E7202D001230BD /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF39B822E7202C001230BD /* SearchView.swift */; };
+		9C37140222EDEDF5007CDDDC /* ScrollToTopProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37140122EDEDF5007CDDDC /* ScrollToTopProtocol.swift */; };
 		9C9AE65922EA20F400784D88 /* FlowerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9AE65822EA20F400784D88 /* FlowerDetailViewController.swift */; };
 		9C9AE65B22EA22D300784D88 /* FlowerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9AE65A22EA22D300784D88 /* FlowerHeaderView.swift */; };
 		9C9AE65D22EA23BF00784D88 /* FlowerHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C9AE65C22EA23BF00784D88 /* FlowerHeaderView.xib */; };
@@ -178,6 +179,7 @@
 		99DC55B120160E1600E314D1 /* FlowersDownloaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowersDownloaderTests.swift; sourceTree = "<group>"; };
 		99EF39B822E7202C001230BD /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		9A204BDDF3C1CBB61D85109E /* Pods_FlowrSpotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowrSpotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C37140122EDEDF5007CDDDC /* ScrollToTopProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollToTopProtocol.swift; sourceTree = "<group>"; };
 		9C9AE65822EA20F400784D88 /* FlowerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerDetailViewController.swift; sourceTree = "<group>"; };
 		9C9AE65A22EA22D300784D88 /* FlowerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerHeaderView.swift; sourceTree = "<group>"; };
 		9C9AE65C22EA23BF00784D88 /* FlowerHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FlowerHeaderView.xib; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				37F6092B201239CB00087B53 /* DataSource */,
 				9CFF552422EC5C7D00489EE8 /* Identifiable.swift */,
 				37DFD3452011E63C001023ED /* ItemDimenson.swift */,
+				9C37140122EDEDF5007CDDDC /* ScrollToTopProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				3787E6572015D3E90080A599 /* RestClient.swift in Sources */,
 				37DFD34E2011E817001023ED /* RootTabViewController.swift in Sources */,
 				37603CEE2010977F00FB9F78 /* RowType.swift in Sources */,
+				9C37140222EDEDF5007CDDDC /* ScrollToTopProtocol.swift in Sources */,
 				99EF39B922E7202D001230BD /* SearchView.swift in Sources */,
 				37603CEC2010977100FB9F78 /* SectionType.swift in Sources */,
 				9C9AE66E22EA3CD300784D88 /* Sighting.swift in Sources */,
